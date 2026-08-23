@@ -1,0 +1,47 @@
+---
+- name: Deploy Lost & Found portal
+  hosts: role_web
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: true
+
+    - name: Copy app files to server
+      copy:
+        src: "{{ playbook_dir }}/../app/"
+        dest: /home/ubuntu/app
+        owner: ubuntu
+        group: ubuntu
+
+    - name: Build Docker image
+      command: docker build -t lost-and-found /home/ubuntu/app
+
+    - name: Remove any existing container
+      command: docker rm -f lost-and-found
+      failed_when: false
+      changed_when: false
+
+    - name: Run Docker container
+      command: >
+        docker run -d --restart always
+        --name lost-and-found -p 80:80 lost-and-found

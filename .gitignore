@@ -1,0 +1,10 @@
+*.pem
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.retry
+__pycache__/
+*.pyc
+*accessKeys*.csv
+*.csv
