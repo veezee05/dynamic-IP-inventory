@@ -29,7 +29,25 @@ variable "environment" {
 }
 
 variable "allowed_ssh_cidr" {
-  description = "CIDR allowed to SSH into the instance. Restrict this to your own IP for safety."
+  description = "CIDR allowed to SSH into the bastion. Restrict this to your own IP for safety."
   type        = string
   default     = "0.0.0.0/0"
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the custom VPC"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "public_subnet_cidr" {
+  description = "CIDR block for the public subnet (bastion)"
+  type        = string
+  default     = "10.0.1.0/24"
+}
+
+variable "private_subnet_cidr" {
+  description = "CIDR block for the private subnet (web server)"
+  type        = string
+  default     = "10.0.2.0/24"
 }

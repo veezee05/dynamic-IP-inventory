@@ -5,14 +5,17 @@ regions:
 
 filters:
   tag:Project: lost-and-found
+  tag:Architecture: bastion
   instance-state-name: running
 
 keyed_groups:
   - key: ec2_tags.Role
     prefix: role
 
+# The bastion has a public IP; the private web server does not, so fall back to
+# its private address (reachable only via the bastion ProxyCommand hop).
 compose:
-  ansible_host: public_ip_address
+  ansible_host: public_ip_address | default(private_ip_address, true)
 
 hostnames:
   - tag:Name

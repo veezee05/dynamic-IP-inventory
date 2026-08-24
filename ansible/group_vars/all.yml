@@ -1,4 +1,9 @@
 ansible_user: ubuntu
-ansible_ssh_private_key_file: "{{ playbook_dir }}/../fa1-key.pem"
+
+# Copied to a space-free path during setup, because the project directory name
+# contains a space and that breaks quoting inside the bastion ProxyCommand.
+#   cp fa1-key.pem ~/.ssh/fa1-key.pem && chmod 400 ~/.ssh/fa1-key.pem
+ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/.ssh/fa1-key.pem"
+
 ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 ansible_python_interpreter: /usr/bin/python3
