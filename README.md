@@ -1,4 +1,4 @@
-# FA1 – Automated Deployment of Campus Lost & Found Portal
+# Automated Deployment of Campus Lost & Found Portal
 
 Automates AWS infrastructure provisioning (Terraform), server configuration and host
 discovery (Ansible with dynamic inventory), and application deployment (Docker) for a
@@ -52,7 +52,7 @@ This project removes that manual step entirely:
 ## Project Structure
 
 ```
-FA1/
+folder/
 ├── app/
 │   ├── index.html       # Campus Lost & Found portal (report/browse items)
 │   └── Dockerfile        # nginx:alpine, serves index.html on port 80
@@ -108,18 +108,6 @@ to work).
 cd ../terraform
 terraform destroy
 ```
-
-## Viva — Quick Answers
-
-| Question | Answer |
-|---|---|
-| DevOps | Combines development and operations with automation |
-| Terraform | Creates infrastructure (IaC) |
-| Ansible | Configures infrastructure; here it also *discovers* infrastructure dynamically via the AWS API instead of a static file |
-| Docker | Runs the application in a container |
-| Dynamic inventory | An Ansible inventory source that queries a live system (here, the AWS EC2 API) instead of reading a static file, so host lists and IPs are always current |
-| Why dynamic inventory over static | Static IPs go stale on every instance stop/start or recreate; dynamic inventory removes that manual sync step and scales to multiple hosts automatically |
-| Image vs Container | Image = blueprint; Container = running instance |
 
 ## Result
 
