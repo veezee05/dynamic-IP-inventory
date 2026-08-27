@@ -131,11 +131,12 @@ resource "aws_instance" "bastion" {
   EOF
 
   tags = {
-    Name         = "${var.project_name}-bastion"
+    Name         = "B-bastion-jumphost-public-nat"
     Project      = var.project_name
     Environment  = var.environment
     Role         = "bastion"
     Architecture = "bastion"
+    Branch       = "feature/bastion-host"
   }
 }
 
@@ -150,11 +151,12 @@ resource "aws_instance" "web" {
   # Tags are what the Ansible dynamic inventory plugin will filter on later.
   # Architecture distinguishes this from the single-server setup on main.
   tags = {
-    Name         = "${var.project_name}-web-private"
+    Name         = "B-bastion-appserver-private-noip"
     Project      = var.project_name
     Environment  = var.environment
     Role         = "web"
     Architecture = "bastion"
+    Branch       = "feature/bastion-host"
   }
 
   # The bastion must exist (and be configured as a NAT device) before this
