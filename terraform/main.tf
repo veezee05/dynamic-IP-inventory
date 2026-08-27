@@ -74,4 +74,11 @@ resource "aws_instance" "web" {
     Role        = "web"
     Branch      = "main"
   }
+
+  # The AMI data source uses most_recent = true, so Canonical publishing a new
+  # Ubuntu image would otherwise force this instance to be destroyed and
+  # rebuilt. New builds still get the latest AMI; existing ones stay put.
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
