@@ -68,9 +68,10 @@ resource "aws_instance" "web" {
 
   # Tags are what the Ansible dynamic inventory plugin will filter on later
   tags = {
-    Name        = "${var.project_name}-web"
+    Name        = "A-main-single-server-public-web"
     Project     = var.project_name
     Environment = var.environment
     Role        = "web"
+    Branch      = "main"
   }
 }
